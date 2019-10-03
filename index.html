@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="style.css" type="text/css" rel="stylesheet" media="all">
+    <title>Etch-A-Sktech</title>
+</head>
+<body>
+    <h1 id="headline">Etch-a-Sketch</h1>
+    <button id="clear">Draw New Grid</button>
+    <button id="test">Test</button>
+    <br>
+    <div id="gridContainer"></div>
+
+<script>
+    
+    const button = document.querySelector('#clear');
+    const test = document.querySelector('#test');
+
+    const gridContainer = document.querySelector('#gridContainer');
+
+    let columnsDiv = 16;
+    let rowsDiv = 16;
+
+    let columns = 0;
+    let rows = 0;
+
+    function createGrid() {
+        for (let i = columns; i < columnsDiv; i++) {
+            for (let j = rows; j < rowsDiv; j++) {
+                let divGrids = document.createElement('div');
+                divGrids.classList.add('grids');
+                divGrids.id = 'grids';
+                divGrids.style.width = "1fr";
+                divGrids.style.height = "1fr";
+                divGrids.style.background = "#53d3d1";
+
+                document.getElementById('gridContainer').appendChild(divGrids);
+
+                divGrids.addEventListener("mouseover", function() {
+                    divGrids.style.background = "#feb249";
+                });
+
+                button.addEventListener("click", function() {
+                    divGrids.style.background = "#53d3d1";
+                    divGrids.parentNode.removeChild(divGrids);
+                });
+
+                test.addEventListener("click", function() {
+                    divGrids.style.width = "8px";
+                    divGrids.style.height = "8px";
+                })
+
+                gridContainer.style.gridTemplateColumns = `repeat(${columnsDiv}, 1fr)`;
+            }
+        }
+    }
+
+    createGrid();
+
+    button.addEventListener("click", function() {
+        columnsDiv = Number(prompt("Enter how many columns you want", "0"));
+            if (isNaN(columnsDiv)) {
+                alert('You need to enter a number');
+                return;
+            }
+        rowsDiv = Number(prompt("Enter how many rows you want", "0"));
+            if (isNaN(rowsDiv)) {
+                alert('You need to enter a number');
+                return;
+            }
+
+            createGrid();
+    });
+
+</script>
+</body>
+</html>
